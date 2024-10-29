@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link th:href="@{css/bootstrap.min.css}" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/style.css}">
+    <title>Payment</title>
+    <style>
+        #checkoutForm {
+            border: 1px solid #ddd; /* Light border */
+            padding: 20px;
+            border-radius: 5px;
+        }
+        .form-label {
+            font-weight: bold; /* Make labels bold */
+            color: #555; /* Slightly lighter color */
+        }
+
+
+    </style>
+</head>
+<body>
+<div th:replace="navbar"></div>
+<h2 class="text-center">Payment</h2>
+<div class="container">
+    <div id="checkoutForm">
+        <h3 class="text-center">Enter Payment Details</h3>
+        <form th:action="@{/checkout}" method="post">
+            <div class="mb-3">
+                <label for="cardName" class="form-label">Name on Card</label>
+                <input type="text" class="form-control" id="cardName" name="cardName" placeholder="Enter cardholder's name" required />
+            </div>
+            <div class="mb-3">
+                <label for="cardNumber" class="form-label">Card Number</label>
+                <input type="text" class="form-control" id="cardNumber" name="cardNumber" placeholder="Enter card number" required />
+            </div>
+            <button type="submit" class="btn btn-success">Pay Now!</button>
+            <a href="#" class="btn btn-secondary" onclick="window.history.back();">Cancel</a>
+        </form>
+    </div>
+</div>
+<script src="@{js/bootstrap.bundle.min.js}"></script>
+<div th:replace="footer"></div>
+</body>
+</html>

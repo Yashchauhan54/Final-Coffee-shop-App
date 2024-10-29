@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link th:href="@{css/bootstrap.min.css}" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/style.css}">
+    <style>
+        .theme-button, .common-theme-button {
+            margin-top: 20px;
+            background-color: brown;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 10px 0;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        .theme-button:hover, .common-theme-button:hover {
+            background-color: green;
+            color: white;
+        }
+    </style>
+    <title>Login</title>
+</head>
+<body>
+<div th:replace="navbar"></div>
+<div class="container mt-5">
+    <h2 class="text-center">Login</h2>
+    <form action="login-v" method="post" class="w-50 mx-auto">
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="text" class="form-control" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" class="form-control" id="password" name="password" required>
+        </div>
+        <button type="submit"  class="theme-button btn1">Login</button>
+    </form>
+    <p th:text="${error}" class="text-center text-danger mt-3"></p>
+</div>
+<script src="@{js/bootstrap.bundle.min.js}"></script>
+<div th:replace="footer"></div>
+</body>
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/style.css}" />
+    <style>
+        /* Custom styles */
+        p {
+            margin-top: 20px;
+            font-size: 1.2rem; /* Increase the font size of p tags */
+            line-height: 1.6; /* Improve readability */
+            color: brown;
+        }
+
+        .theme-button, .common-theme-button {
+            margin-top: 20px;
+            background-color: brown;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 10px 0;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        .theme-button:hover, .common-theme-button:hover {
+            background-color: green;
+            color: white;
+        }
+
+        .center-image, .left-image {
+            margin-top: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .right-area h2, .text-center h1 {
+            color: brown;
+            margin-top: 20px;
+        }
+
+        .card {
+            border: none;
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            color: brown;
+        }
+
+        .card-text {
+            font-size: 1rem;
+            color: #333;
+        }
+
+        .carousel-custom-height {
+            height: 450px; /* Set carousel height */
+        }
+
+        .carousel-custom-height .carousel-inner {
+            height: 100%;
+        }
+
+        .carousel-custom-height .carousel-item {
+            height: 100%;
+        }
+
+        .product-item {
+            display: flex;
+            align-items: center; /* Center align items vertically */
+            height: 100%; /* Full height for carousel item */
+        }
+
+        .product-image {
+            height: 350px; /* Fixed height for product image */
+            width: auto; /* Maintain aspect ratio */
+            max-width: 100%; /* Responsive width */
+            object-fit: cover; /* Ensures the image covers the area */
+            margin-right: 20px; /* Space between image and details */
+        }
+
+        .product-details {
+            flex: 1; /* Take up remaining space */
+            padding-left: 20px; /* Space between image and details */
+        }
+
+        .product-name, .product-price {
+            font-size: 30px; /* Set font size for product name and price */
+            color: brown; /* Color for text */
+        }
+
+        body{
+        background-image: url('body.jpg');
+        }
+    </style>
+</head>
+<body>
+<div th:replace="navbar"></div>
+
+<div class="container">
+    <div class="col-md-12 text-center">
+        <img class="center-image img-fluid" th:src="@{/cafe.jpg}" />
+        <p>In 1999, we started off as the first specialty coffee shop in Nepal. Over the years, we have diversified from a small coffee shop to an enterprise franchising the Nepali Coffee brand, nationally and internationally.</p>
+        <a href="#"><button class="theme-button btn1">Learn More</button></a>
+    </div>
+
+    <div class="row col-md-12">
+        <div class="right-area col-md-6 text-center">
+            <h1>The Journey of Crop to Cup</h1>
+            <p style="color:black;">Grown in the ideal Himalayan air, our coffee beans are roasted to perfection and sent off to all our outlets to deliver the best coffee experience.</p>
+            <a href="#"><button class="theme-button btn1">Visit now!</button></a>
+        </div>
+        <div class="left-area col-md-6">
+            <img class="left-image img-fluid" th:src="@{/coffee.jpg}" />
+        </div>
+    </div>
+
+    <div class="container mt-5">
+        <h1 style="color:brown;" class="text-center mt-5">Buy Your Coffee Online</h1>
+        <div class="container">
+            <div class="row">
+                <div class="card col-md-3 mb-3" th:each="product : ${products}">
+                    <img class="card-img-top" th:src="@{'/images/' + ${product.image}}" alt="Product Image">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${product.productName}"></h5>
+                        <p class="card-text" th:text="${product.price} + ' CAD'"></p>
+                        <form th:action="@{/add}" method="post">
+                            <input type="hidden" name="item" th:value="${product.productName}">
+                            <input type="hidden" name="image" th:value="${product.image}">
+                            <input type="hidden" name="price" th:value="${product.price}">
+                            <button class="common-theme-button btn1 btn-primary" type="submit">Order Now!</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <h1 style="color:brown;" class="text-center">Unlimited Drinks Delivery $10.99 per Month</h1>
+
+        <div id="carouselExampleCaptions" class="carousel slide carousel-custom-height" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="3" aria-label="Slide 4"></button>
+                <!-- Add more buttons here if you have more products -->
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active" th:each="product, iterStat : ${products}">
+                    <div class="product-item d-flex align-items-center">
+                        <img th:src="@{'/images/' + ${product.image}}" class="product-image img-fluid" alt="Product Image">
+                        <div class="product-details">
+                            <h1 style="color:red;" class="product-name" th:text="${product.productName}">Product Name</h1>
+                            <h2 style="color:black;" class="product-price" th:text="${product.price} + ' CAD'">Price</h2>
+                            <form th:action="@{/add}" method="post">
+                                <input type="hidden" name="item" th:value="${product.productName}">
+                                <input type="hidden" name="image" th:value="${product.image}">
+                                <input type="hidden" name="price" th:value="${product.price}">
+                                <button class="common-theme-button btn1" type="submit">Order Now!</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- Add more carousel-item divs here for additional products -->
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+        <div th:replace="footer"></div>
+
+<script src="js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

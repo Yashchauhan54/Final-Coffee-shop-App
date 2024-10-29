@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+
+    <!-- Latest Bootstrap CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/style.css}" />
+    <style>
+        .cart-image {
+            height: 40px;
+            width: 70px;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="navbar"></div>
+
+<div class="container">
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Image</th>
+            <th scope="col">Name</th>
+            <th scope="col">Price</th>
+            <th scope="col">Qty</th>
+            <th scope="col">Amount</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="item, index : ${cartItems}">
+            <th scope="row" th:text="${index.count}"></th>
+            <td><img class="cart-image" th:src="@{'/images/' + ${item.image}}" alt="grocery-shop"></td>
+            <td th:text="${item.name}"></td>
+            <td th:text="${item.price}"></td>
+            <td th:text="${item.quantity}"></td>
+            <td th:text="${item.quantity * item.price}"></td>
+            <td>
+                <form th:action="@{/remove}" method="post">
+                    <input type="hidden" name="index" th:value="${index.index}">
+                    <button class="btn btn-danger" type="submit">X</button>
+                </form>
+            </td>
+        </tr>
+
+        <tr>
+            <th scope="row">Total</th>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td th:text="${total}"></td>
+        </tr>
+
+        <tr>
+            <th scope="row"></th>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+
+                    <a href="payment"><button class="common-theme-button btn1 btn-primary">Check out</button></a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div th:replace="footer"></div>
+<script src="js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
