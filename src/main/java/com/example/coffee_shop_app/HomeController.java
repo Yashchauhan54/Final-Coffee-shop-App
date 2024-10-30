@@ -284,11 +284,11 @@ public class HomeController {
 
     @GetMapping("/order-details/{orderId}")
     public String orderDetails(@PathVariable Long orderId, Model model) {
-        Order order = orderRepository.findById(orderId).orElse(null);
-        if (order != null) {
-            model.addAttribute("order", order);
-            model.addAttribute("orderHistories", order.getOrderHistoryList());
-        }
-        return "order-details"; // Create a view for displaying order details
+        Order order = orderRepository.findById(orderId).orElseThrow(() -> new IllegalArgumentException("Invalid order Id:" + orderId));
+        List<OrderHistory> orderHistoryList = orderHistoryRepository.findByOrder(order);
+
+        model.addAttribute("orderHistoryList", orderHistoryList);
+        model.addAttribute("order", order);
+        return "order-details";
     }
 }
